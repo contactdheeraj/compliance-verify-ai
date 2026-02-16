@@ -1,0 +1,233 @@
+[
+  {
+    "clause_id": "RG_271_27",
+    "text": "A complaint is an expression of dissatisfaction made to or about an organisation, related to its products, services, staff or the handling of a complaint, where a response or resolution is explicitly or implicitly expected or legally required. A consumer or small business is not required to expressly state the word 'complaint' or 'dispute', or put their complaint in writing, to trigger a financial firm's obligation to deal with a complaint under its IDR procedures.",
+    "section_title": "Definition of complaint",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 8,
+    "category": "definition",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_30",
+    "text": "Financial firms must have a broad interpretation of what constitutes a complaint. This includes expressions of dissatisfaction made through any channel, including in person, by phone, email, online, social media, or through a representative or authorised agent. The expression of dissatisfaction need not include the word 'complaint' to be captured by the IDR requirements.",
+    "section_title": "Identifying complaints",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 9,
+    "category": "identification",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_32",
+    "text": "A financial firm must ensure consumer privacy is protected when dealing with complaints. Representatives of financial firms must refer complaints made on social media in accordance with internal procedures to their licensee. Financial firms must have systems for identifying complaints made through social media channels they control or monitor.",
+    "section_title": "Social media complaints",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 10,
+    "category": "channel_handling",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_36",
+    "text": "A financial firm must acknowledge a complaint as soon as practicable, and in any event within one business day of receiving the complaint, or within the timeframe required by applicable legislation if that timeframe is shorter. The acknowledgement must include the unique reference number assigned to the complaint.",
+    "section_title": "Acknowledgement of complaints",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 12,
+    "category": "timeframe",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_44",
+    "text": "ASIC encourages financial firms to deal with complaints from all consumers and small businesses under their IDR procedures, including complaints about products or services that may not be strictly required under legislation. Firms should take an expansive approach to what complaints their IDR procedures cover.",
+    "section_title": "Scope of IDR procedures",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 14,
+    "category": "scope",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_56",
+    "text": "A financial firm must provide a written IDR response to a complainant within 30 calendar days of receiving the complaint. For standard complaints about products and services, the maximum timeframe is 30 calendar days. For superannuation complaints other than death benefit distribution objections, the maximum timeframe is 45 calendar days. For complaints involving objections to proposed death benefit distributions, the maximum timeframe is 90 calendar days.",
+    "section_title": "Maximum IDR response timeframes",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 18,
+    "category": "timeframe",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_53",
+    "text": "An IDR response must include: the outcome of the complaint and the reasons for the decision; information about the complainant's right to escalate the complaint to the Australian Financial Complaints Authority (AFCA) if they are not satisfied with the outcome; the contact details for AFCA including phone number, email, website, and mailing address; and the information relied upon in reaching the decision.",
+    "section_title": "Content of IDR response",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 17,
+    "category": "response_content",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_75",
+    "text": "An exception to providing a written IDR response applies if a complaint is resolved to the satisfaction of the complainant within five business days of receiving the complaint. However, this exception does not apply to: complaints about hardship notices; complaints about a decision of a superannuation trustee; or complaints about the value of a delayed or denied insurance claim.",
+    "section_title": "Exception for complaints resolved within 5 days",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 22,
+    "category": "exception",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_112",
+    "text": "If a financial firm is unable to provide an IDR response within the required timeframe, it must inform the complainant of the delay before the expiry of the relevant maximum timeframe. The delay notification must include the reasons for the delay and the complainant's right to escalate to AFCA, including AFCA contact details.",
+    "section_title": "Delay notifications",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 32,
+    "category": "timeframe",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_179",
+    "text": "A financial firm must have systems for recording all complaints received, including complaints resolved at first point of contact and complaints resolved within five business days. The recording system must capture sufficient information to enable the firm to identify systemic issues and comply with IDR data reporting obligations.",
+    "section_title": "Recording complaints",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 48,
+    "category": "recordkeeping",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "RG_271_183",
+    "text": "A financial firm must regularly report on complaint data to senior management and, where applicable, to the Board or its committees. The reporting must include the number and type of complaints received, the time taken to resolve complaints, the outcomes of complaints, and any systemic issues identified from complaint data.",
+    "section_title": "Reporting complaint data",
+    "source_doc": "ASIC_RG_271",
+    "source_name": "ASIC Regulatory Guide 271 - Internal Dispute Resolution",
+    "page_number": 49,
+    "category": "reporting",
+    "jurisdiction": "AU",
+    "effective_date": "2021-10-05"
+  },
+  {
+    "clause_id": "REP_802_F1",
+    "text": "ASIC reviewed 11 general insurers and found significant variation in complaint handling performance. One of the poorer performing insurers provided an IDR response within the required 30 calendar day period for only 76 percent of complaints. Insurers are expected to consistently meet the timeframes set out in RG 271.",
+    "section_title": "Insurer complaint handling performance",
+    "source_doc": "ASIC_REP_802",
+    "source_name": "ASIC REP 802 - Cause for Complaint: Complaints Handling in General Insurance",
+    "page_number": 5,
+    "category": "enforcement_finding",
+    "jurisdiction": "AU",
+    "effective_date": "2024-12-05"
+  },
+  {
+    "clause_id": "REP_802_F2",
+    "text": "One in eight IDR responses for rejected complaints failed to meet mandatory content requirements under RG 271. Ten of the eleven insurers did not comply with the requirements, with the proportion of non-compliant IDR responses for rejected complaints ranging from 3 percent to 35 percent.",
+    "section_title": "IDR response content failures",
+    "source_doc": "ASIC_REP_802",
+    "source_name": "ASIC REP 802 - Cause for Complaint: Complaints Handling in General Insurance",
+    "page_number": 8,
+    "category": "enforcement_finding",
+    "jurisdiction": "AU",
+    "effective_date": "2024-12-05"
+  },
+  {
+    "clause_id": "REP_802_F3",
+    "text": "One in five delay notifications failed to meet mandatory content requirements. Insurers are required to inform complainants of the reason for the delay and their right to escalate to AFCA. Nine of the eleven insurers did not comply with the requirements, and the proportion of non-compliant delay notifications ranged from 7 percent to 75 percent.",
+    "section_title": "Delay notification failures",
+    "source_doc": "ASIC_REP_802",
+    "source_name": "ASIC REP 802 - Cause for Complaint: Complaints Handling in General Insurance",
+    "page_number": 10,
+    "category": "enforcement_finding",
+    "jurisdiction": "AU",
+    "effective_date": "2024-12-05"
+  },
+  {
+    "clause_id": "REP_802_F4",
+    "text": "Some insurers did not have fully integrated systems for complaints management. Claims systems and complaints systems were not linked, meaning complaint handlers did not always have access to relevant claims information. Constrained access to information contributed to delays in complaint resolution and incomplete IDR responses.",
+    "section_title": "System integration failures",
+    "source_doc": "ASIC_REP_802",
+    "source_name": "ASIC REP 802 - Cause for Complaint: Complaints Handling in General Insurance",
+    "page_number": 14,
+    "category": "enforcement_finding",
+    "jurisdiction": "AU",
+    "effective_date": "2024-12-05"
+  },
+  {
+    "clause_id": "CFPB_CR_01",
+    "text": "The CFPB expects companies to provide complete, accurate, and timely responses tailored to the issues described in each consumer's complaint, generally within 15 calendar days of the complaint being sent to the company. If a complaint cannot be closed within this timeframe, the company must provide an interim explanation to the consumer and to the CFPB and a final response within 60 calendar days.",
+    "section_title": "Company response requirements",
+    "source_doc": "CFPB_COMPLAINT_HANDLING",
+    "source_name": "CFPB Consumer Complaint and Inquiry Handling Processes",
+    "page_number": 3,
+    "category": "timeframe",
+    "jurisdiction": "US",
+    "effective_date": "2018-04-01"
+  },
+  {
+    "clause_id": "CFPB_CR_02",
+    "text": "When responding through the secure portal, companies select a response category. The substantive response choices are: in progress, closed with explanation, closed with monetary relief, and closed with non-monetary relief. Companies must address every concern raised by the consumer and provide any supporting documentation.",
+    "section_title": "Response categories",
+    "source_doc": "CFPB_COMPLAINT_HANDLING",
+    "source_name": "CFPB Consumer Complaint and Inquiry Handling Processes",
+    "page_number": 4,
+    "category": "response_content",
+    "jurisdiction": "US",
+    "effective_date": "2018-04-01"
+  },
+  {
+    "clause_id": "CFPB_CR_03",
+    "text": "Complaints are published in the Consumer Complaint Database after the company responds confirming a commercial relationship with the consumer, or after 15 calendar days of the CFPB sending the complaint to the company, whichever comes first. The CFPB also publishes the consumer's narrative description of their experience if the consumer opts to share it publicly.",
+    "section_title": "Complaint publication",
+    "source_doc": "CFPB_COMPLAINT_HANDLING",
+    "source_name": "CFPB Consumer Complaint and Inquiry Handling Processes",
+    "page_number": 5,
+    "category": "transparency",
+    "jurisdiction": "US",
+    "effective_date": "2018-04-01"
+  },
+  {
+    "clause_id": "CFPB_CR_04",
+    "text": "Consumer Response analyzes consumer complaints, company responses, and consumer feedback to assess whether companies are providing accurate, complete, and timely responses. Consumer Response compiles the results of several reviews of a single company into a company-specific report, which is shared directly with that company to help compliance personnel understand their complaint response performance history.",
+    "section_title": "CFPB monitoring and analysis",
+    "source_doc": "CFPB_COMPLAINT_HANDLING",
+    "source_name": "CFPB Consumer Complaint and Inquiry Handling Processes",
+    "page_number": 7,
+    "category": "monitoring",
+    "jurisdiction": "US",
+    "effective_date": "2018-04-01"
+  },
+  {
+    "clause_id": "CFPB_CR_05",
+    "text": "The consumer complaint process begins with the CFPB receiving a complaint from a consumer through its website, by telephone, by mail, or by referral from another agency. Complaints must include: the consumer financial product or service concerned, the category that best describes the issue, the subject company, and a complaint narrative describing the issue and the desired resolution.",
+    "section_title": "Complaint intake requirements",
+    "source_doc": "CFPB_COMPLAINT_HANDLING",
+    "source_name": "CFPB Consumer Complaint and Inquiry Handling Processes",
+    "page_number": 2,
+    "category": "intake",
+    "jurisdiction": "US",
+    "effective_date": "2018-04-01"
+  },
+  {
+    "clause_id": "CFPB_CR_06",
+    "text": "The Bureau refers or sends complaints to another regulator when a particular complaint does not involve a product or service within the Bureau's authority, or when a complaint concerns a depository institution that the Bureau does not supervise. The CFPB sends complaints to banks or credit unions it supervises and refers complaints about non-supervised institutions to the appropriate prudential federal regulator.",
+    "section_title": "Complaint referral process",
+    "source_doc": "CFPB_COMPLAINT_HANDLING",
+    "source_name": "CFPB Consumer Complaint and Inquiry Handling Processes",
+    "page_number": 6,
+    "category": "referral",
+    "jurisdiction": "US",
+    "effective_date": "2018-04-01"
+  }
+]

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComplianceVerify AI | Complaint Verification System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0c0f14;
+            --bg-secondary: #141820;
+            --bg-tertiary: #1a1f2b;
+            --bg-card: #1e2433;
+            --bg-input: #151a24;
+            --border: #2a3042;
+            --border-focus: #4a7cff;
+            --text-primary: #e8ecf4;
+            --text-secondary: #8a94a8;
+            --text-muted: #5a6478;
+            --accent-blue: #4a7cff;
+            --accent-blue-dim: rgba(74, 124, 255, 0.12);
+            --accent-red: #ff4a5e;
+            --accent-red-dim: rgba(255, 74, 94, 0.12);
+            --accent-green: #34d399;
+            --accent-green-dim: rgba(52, 211, 153, 0.12);
+            --accent-amber: #f59e0b;
+            --accent-amber-dim: rgba(245, 158, 11, 0.12);
+            --accent-purple: #a78bfa;
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius: 10px;
+            --radius-sm: 6px;
+            --shadow: 0 4px 24px rgba(0,0,0,0.3);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* DISCLAIMER BANNER */
+        .disclaimer-banner {
+            background: linear-gradient(90deg, #1a1200, #261a00);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 10px 24px;
+            font-size: 12px;
+            color: var(--accent-amber);
+            text-align: center;
+            letter-spacing: 0.02em;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .disclaimer-banner strong { font-weight: 600; }
+
+        /* HEADER */
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: var(--accent-blue);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 700; color: white;
+        }
+        .header-title {
+            font-size: 18px; font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .header-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 1px;
+        }
+        .header-right { display: flex; gap: 10px; align-items: center; }
+        .status-pill {
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: flex; align-items: center; gap: 6px;
+        }
+        .status-pill.online {
+            background: var(--accent-green-dim);
+            color: var(--accent-green);
+        }
+        .status-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        /* MAIN LAYOUT */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 0;
+            min-height: calc(100vh - 110px);
+        }
+
+        /* LEFT PANEL - COMPLAINT + VERDICT */
+        .left-panel {
+            padding: 28px 32px;
+            overflow-y: auto;
+        }
+
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        /* COMPLAINT INPUT */
+        .complaint-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .input-group { margin-bottom: 16px; }
+        .input-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        textarea {
+            width: 100%;
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            padding: 14px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            min-height: 120px;
+            transition: border-color 0.2s;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: var(--border-focus);
+            box-shadow: 0 0 0 3px var(--accent-blue-dim);
+        }
+        textarea::placeholder { color: var(--text-muted); }
+
+        .controls-row {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+        }
+
+        select {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text-primary);
+            padding: 10px 14px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            cursor: pointer;
+            min-width: 180px;
+        }
+        select:focus {
+            outline: none;
+            border-color: var(--border-focus);
+        }
+
+        .btn-verify {
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            padding: 10px 28px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+        .btn-verify:hover { background: #5a8aff; transform: translateY(-1px); }
+        .btn-verify:active { transform: translateY(0); }
+        .btn-verify:disabled {
+            background: var(--border);
+            color: var(--text-muted);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-clear {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 20px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-clear:hover { border-color: var(--text-secondary); }
+
+        /* LOADING STATE */
+        .loading-bar {
+            height: 3px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px 0;
+            display: none;
+        }
+        .loading-bar.active { display: block; }
+        .loading-bar-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            animation: loading 1.5s ease-in-out infinite;
+            width: 30%;
+        }
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(400%); }
+        }
+
+        /* VERDICT DISPLAY */
+        .verdict-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 24px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .verdict-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+
+        .verdict-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        .verdict-badge.potential_breach { background: var(--accent-red-dim); color: var(--accent-red); }
+        .verdict-badge.no_breach { background: var(--accent-green-dim); color: var(--accent-green); }
+        .verdict-badge.insufficient_info { background: var(--accent-amber-dim); color: var(--accent-amber); }
+        .verdict-badge.no_matching_regulation { background: var(--accent-blue-dim); color: var(--accent-blue); }
+
+        .risk-badge {
+            font-size: 11px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .risk-badge.high { background: var(--accent-red-dim); color: var(--accent-red); }
+        .risk-badge.medium { background: var(--accent-amber-dim); color: var(--accent-amber); }
+        .risk-badge.low { background: var(--accent-green-dim); color: var(--accent-green); }
+        .risk-badge.none { background: var(--accent-blue-dim); color: var(--text-muted); }
+
+        .verdict-explanation {
+            font-size: 14px;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            padding: 14px;
+            background: var(--bg-input);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        /* CITED CLAUSES */
+        .clause-card {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-bottom: 10px;
+        }
+        .clause-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .clause-id {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--accent-blue);
+            background: var(--accent-blue-dim);
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        .clause-source {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .clause-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .clause-category {
+            display: inline-block;
+            margin-top: 8px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            background: var(--bg-tertiary);
+            padding: 2px 8px;
+            border-radius: 3px;
+        }
+
+        /* RECOMMENDATIONS */
+        .recommendations {
+            margin-top: 16px;
+        }
+        .rec-item {
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+            padding: 8px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .rec-bullet {
+            width: 6px; height: 6px;
+            min-width: 6px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            margin-top: 7px;
+        }
+
+        /* SEARCH DIAGNOSTICS */
+        .diagnostics {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-top: 16px;
+        }
+        .diagnostics-toggle {
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            user-select: none;
+        }
+        .diagnostics-content {
+            display: none;
+            margin-top: 12px;
+        }
+        .diagnostics-content.open { display: block; }
+        .diag-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 4px 0;
+            font-size: 12px;
+            font-family: var(--font-mono);
+        }
+        .score-bar {
+            width: 60px; height: 4px;
+            background: var(--bg-tertiary);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+        .score-bar-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            border-radius: 2px;
+            transition: width 0.3s;
+        }
+        .score-label {
+            color: var(--text-muted);
+            min-width: 40px;
+            text-align: right;
+        }
+
+        /* RIGHT PANEL - HISTORY + STATS */
+        .right-panel {
+            background: var(--bg-secondary);
+            border-left: 1px solid var(--border);
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .stat-card {
+            background: var(--bg-tertiary);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+        }
+        .stat-value {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* HISTORY LIST */
+        .history-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border-color 0.2s;
+        }
+        .history-item:hover { border-color: var(--accent-blue); }
+        .history-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .history-time {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .history-verdict {
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .history-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        /* SAMPLE COMPLAINTS */
+        .samples-section { margin-bottom: 24px; }
+        .sample-btn {
+            display: block;
+            width: 100%;
+            text-align: left;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            line-height: 1.5;
+        }
+        .sample-btn:hover {
+            border-color: var(--accent-blue);
+            color: var(--text-primary);
+        }
+        .sample-jurisdiction {
+            font-size: 10px;
+            color: var(--accent-blue);
+            font-weight: 600;
+            letter-spacing: 0.04em;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+            .right-panel {
+                border-left: none;
+                border-top: 1px solid var(--border);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- PERSISTENT DISCLAIMER -->
+<div class="disclaimer-banner">
+    <strong>DEMO ONLY</strong> &mdash; This system is for educational and evaluation purposes only. It does not constitute legal advice.
+    Compliance determinations must be verified by qualified compliance and legal professionals before taking any action.
+</div>
+
+<!-- HEADER -->
+<div class="header">
+    <div class="header-left">
+        <div class="logo-icon">CV</div>
+        <div>
+            <div class="header-title">ComplianceVerify AI</div>
+            <div class="header-subtitle">Complaint Verification System v1.0</div>
+        </div>
+    </div>
+    <div class="header-right">
+        <div class="status-pill online" id="statusPill">
+            <span class="status-dot"></span>
+            <span id="statusText">21 clauses indexed</span>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="main-container">
+
+    <!-- LEFT: COMPLAINT INPUT + VERDICT -->
+    <div class="left-panel">
+
+        <div class="section-label">Submit Complaint for Verification</div>
+        <div class="complaint-card">
+            <div class="input-group">
+                <label for="complaintText">Consumer Complaint</label>
+                <textarea id="complaintText" rows="5" placeholder="Paste or type the consumer complaint here. Example: 'I lodged a complaint with my bank 6 weeks ago about an unauthorized transaction. They still haven't responded or acknowledged my complaint.'"></textarea>
+            </div>
+            <div class="controls-row">
+                <div class="input-group" style="margin-bottom:0">
+                    <label for="jurisdictionSelect">Jurisdiction</label>
+                    <select id="jurisdictionSelect">
+                        <option value="AU">Australia (ASIC / APRA)</option>
+                        <option value="US">United States (CFPB)</option>
+                    </select>
+                </div>
+                <div style="flex:1"></div>
+                <button class="btn-clear" onclick="clearForm()">Clear</button>
+                <button class="btn-verify" id="verifyBtn" onclick="verifyComplaint()">Verify Complaint</button>
+            </div>
+        </div>
+
+        <div class="loading-bar" id="loadingBar">
+            <div class="loading-bar-fill"></div>
+        </div>
+
+        <!-- VERDICT AREA -->
+        <div id="verdictArea"></div>
+
+    </div>
+
+    <!-- RIGHT: HISTORY + SAMPLES -->
+    <div class="right-panel">
+
+        <div class="section-label">Index Statistics</div>
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-value" id="statTotal">21</div>
+                <div class="stat-label">Total Clauses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statSources">3</div>
+                <div class="stat-label">Regulations</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statAU">15</div>
+                <div class="stat-label">AU Clauses</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="statUS">6</div>
+                <div class="stat-label">US Clauses</div>
+            </div>
+        </div>
+
+        <div class="section-label">Try Sample Complaints</div>
+        <div class="samples-section">
+            <button class="sample-btn" onclick="loadSample(0)">
+                <div class="sample-jurisdiction">AU - TIMEFRAME BREACH</div>
+                I lodged a complaint with my bank 6 weeks ago about an unauthorized transaction. They still haven't responded or even acknowledged my complaint.
+            </button>
+            <button class="sample-btn" onclick="loadSample(1)">
+                <div class="sample-jurisdiction">AU - INCOMPLETE IDR RESPONSE</div>
+                The insurer rejected my claim and sent a one-line email saying "claim denied." They gave no reasons and didn't mention anything about AFCA or how to escalate.
+            </button>
+            <button class="sample-btn" onclick="loadSample(2)">
+                <div class="sample-jurisdiction">AU - SOCIAL MEDIA IGNORED</div>
+                I commented on my bank's official Facebook page about ongoing issues with my account fees. They deleted my comment and never followed up.
+            </button>
+            <button class="sample-btn" onclick="loadSample(3)">
+                <div class="sample-jurisdiction">US - LATE RESPONSE</div>
+                I filed a complaint about unauthorized credit card charges 2 months ago. The company sent a brief acknowledgment but never provided a final response or resolution.
+            </button>
+            <button class="sample-btn" onclick="loadSample(4)">
+                <div class="sample-jurisdiction">AU - SYSTEMIC ISSUE</div>
+                Multiple customers in our community group have reported the same problem: the super fund takes over 90 days to resolve complaints and never sends written reasons for their decisions.
+            </button>
+        </div>
+
+        <div class="section-label">Verification History</div>
+        <div id="historyList">
+            <div class="empty-state">No verifications yet. Submit a complaint to get started.</div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    const API_BASE = window.location.origin;
+    let history = [];
+
+    const SAMPLES = [
+        { text: "I lodged a complaint with my bank 6 weeks ago about an unauthorized transaction. They still haven't responded or even acknowledged my complaint.", jurisdiction: "AU" },
+        { text: "The insurer rejected my claim and sent a one-line email saying \"claim denied.\" They gave no reasons and didn't mention anything about AFCA or how to escalate.", jurisdiction: "AU" },
+        { text: "I commented on my bank's official Facebook page about ongoing issues with my account fees. They deleted my comment and never followed up.", jurisdiction: "AU" },
+        { text: "I filed a complaint about unauthorized credit card charges 2 months ago. The company sent a brief acknowledgment but never provided a final response or resolution.", jurisdiction: "US" },
+        { text: "Multiple customers in our community group have reported the same problem: the super fund takes over 90 days to resolve complaints and never sends written reasons for their decisions.", jurisdiction: "AU" },
+    ];
+
+    function loadSample(idx) {
+        document.getElementById('complaintText').value = SAMPLES[idx].text;
+        document.getElementById('jurisdictionSelect').value = SAMPLES[idx].jurisdiction;
+    }
+
+    function clearForm() {
+        document.getElementById('complaintText').value = '';
+        document.getElementById('verdictArea').innerHTML = '';
+    }
+
+    async function verifyComplaint() {
+        const text = document.getElementById('complaintText').value.trim();
+        const jurisdiction = document.getElementById('jurisdictionSelect').value;
+
+        if (!text) {
+            alert('Please enter a complaint to verify.');
+            return;
+        }
+
+        const btn = document.getElementById('verifyBtn');
+        const loader = document.getElementById('loadingBar');
+        btn.disabled = true;
+        btn.textContent = 'Analyzing...';
+        loader.classList.add('active');
+        document.getElementById('verdictArea').innerHTML = '';
+
+        try {
+            const response = await fetch(`${API_BASE}/api/verify-complaint`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ complaint_text: text, jurisdiction }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`API error: ${response.status}`);
+            }
+
+            const data = await response.json();
+            renderVerdict(data);
+            history.unshift(data);
+            renderHistory();
+
+        } catch (err) {
+            document.getElementById('verdictArea').innerHTML = `
+                <div class="verdict-card">
+                    <div class="verdict-badge insufficient_info">&#x26A0; Error</div>
+                    <p style="margin-top:12px;color:var(--text-secondary);font-size:14px;">
+                        Could not reach the API. Make sure the server is running on port 8000.<br>
+                        <span style="font-family:var(--font-mono);font-size:12px;color:var(--text-muted);">${err.message}</span>
+                    </p>
+                </div>`;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Verify Complaint';
+            loader.classList.remove('active');
+        }
+    }
+
+    function verdictLabel(v) {
+        const labels = {
+            potential_breach: '&#x26D4; Potential Breach',
+            no_breach: '&#x2705; No Breach Identified',
+            insufficient_info: '&#x26A0; Insufficient Information',
+            no_matching_regulation: '&#x1F50D; No Matching Regulation',
+        };
+        return labels[v] || v;
+    }
+
+    function renderVerdict(data) {
+        const area = document.getElementById('verdictArea');
+
+        let clausesHTML = '';
+        if (data.clauses_cited && data.clauses_cited.length > 0) {
+            clausesHTML = '<div class="section-label" style="margin-top:20px">Cited Regulatory Clauses</div>';
+            data.clauses_cited.forEach(c => {
+                clausesHTML += `
+                    <div class="clause-card">
+                        <div class="clause-header">
+                            <span class="clause-id">${c.clause_id}</span>
+                            <span class="clause-source">${c.source || ''}</span>
+                        </div>
+                        <div class="clause-text">${c.text}</div>
+                        <span class="clause-category">${c.category || ''}</span>
+                        ${c.relevance_score ? `<span class="clause-category" style="margin-left:6px">score: ${(c.relevance_score * 100).toFixed(0)}%</span>` : ''}
+                    </div>`;
+            });
+        }
+
+        let recsHTML = '';
+        if (data.recommendations && data.recommendations.length > 0) {
+            recsHTML = '<div class="recommendations"><div class="section-label" style="margin-top:20px">Recommendations</div>';
+            data.recommendations.forEach(r => {
+                recsHTML += `<div class="rec-item"><div class="rec-bullet"></div><div>${r}</div></div>`;
+            });
+            recsHTML += '</div>';
+        }
+
+        let diagHTML = '';
+        if (data.search_results && data.search_results.length > 0) {
+            let diagRows = '';
+            data.search_results.forEach(sr => {
+                const pct = Math.round(sr.score * 100);
+                diagRows += `
+                    <div class="diag-row">
+                        <span class="clause-id" style="font-size:11px">${sr.clause_id}</span>
+                        <div class="score-bar"><div class="score-bar-fill" style="width:${pct}%"></div></div>
+                        <span class="score-label">${pct}%</span>
+                        <span style="color:var(--text-muted);font-size:11px">F:${Math.round(sr.faiss_score*100)}% K:${Math.round(sr.bm25_score*100)}%</span>
+                    </div>`;
+            });
+            diagHTML = `
+                <div class="diagnostics">
+                    <div class="diagnostics-toggle" onclick="this.nextElementSibling.classList.toggle('open')">
+                        &#x25B6; Search Diagnostics (FAISS + BM25 hybrid scores)
+                    </div>
+                    <div class="diagnostics-content">${diagRows}</div>
+                </div>`;
+        }
+
+        area.innerHTML = `
+            <div class="section-label">Verification Result</div>
+            <div class="verdict-card">
+                <div class="verdict-header">
+                    <span class="verdict-badge ${data.verdict}">${verdictLabel(data.verdict)}</span>
+                    <span class="risk-badge ${data.risk_level}">Risk: ${data.risk_level}</span>
+                </div>
+                <div class="verdict-explanation">${data.explanation}</div>
+                ${clausesHTML}
+                ${recsHTML}
+                ${diagHTML}
+            </div>`;
+    }
+
+    function renderHistory() {
+        const container = document.getElementById('historyList');
+        if (history.length === 0) {
+            container.innerHTML = '<div class="empty-state">No verifications yet.</div>';
+            return;
+        }
+
+        container.innerHTML = history.slice(0, 15).map(h => {
+            const time = new Date(h.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            return `
+                <div class="history-item" onclick="renderVerdict(${JSON.stringify(h).replace(/"/g, '&quot;')})">
+                    <div class="history-meta">
+                        <span class="history-time">${time} [${h.jurisdiction}]</span>
+                        <span class="history-verdict verdict-badge ${h.verdict}" style="font-size:10px;padding:2px 8px">${h.verdict.replace('_', ' ')}</span>
+                    </div>
+                    <div class="history-text">${h.complaint_text}</div>
+                </div>`;
+        }).join('');
+    }
+
+    // Load stats on page load
+    async function loadStats() {
+        try {
+            const resp = await fetch(`${API_BASE}/api/regulations`);
+            if (resp.ok) {
+                const stats = await resp.json();
+                document.getElementById('statTotal').textContent = stats.total_clauses || 0;
+                document.getElementById('statSources').textContent = Object.keys(stats.sources || {}).length;
+                document.getElementById('statAU').textContent = (stats.jurisdictions || {}).AU || 0;
+                document.getElementById('statUS').textContent = (stats.jurisdictions || {}).US || 0;
+                document.getElementById('statusText').textContent = `${stats.total_clauses} clauses indexed`;
+            }
+        } catch (e) {
+            document.getElementById('statusText').textContent = 'API offline';
+            document.getElementById('statusPill').style.background = 'var(--accent-red-dim)';
+            document.getElementById('statusPill').style.color = 'var(--accent-red)';
+        }
+    }
+
+    // Allow Ctrl+Enter to submit
+    document.getElementById('complaintText').addEventListener('keydown', function(e) {
+        if (e.ctrlKey && e.key === 'Enter') verifyComplaint();
+    });
+
+    loadStats();
+</script>
+</body>
+</html>
