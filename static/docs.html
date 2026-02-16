@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComplianceVerify AI | Documentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0c0f14;
+            --bg-secondary: #141820;
+            --bg-tertiary: #1a1f2b;
+            --bg-card: #1e2433;
+            --bg-input: #151a24;
+            --border: #2a3042;
+            --text-primary: #e8ecf4;
+            --text-secondary: #8a94a8;
+            --text-muted: #5a6478;
+            --accent-blue: #4a7cff;
+            --accent-blue-dim: rgba(74, 124, 255, 0.12);
+            --accent-green: #34d399;
+            --accent-green-dim: rgba(52, 211, 153, 0.12);
+            --accent-amber: #f59e0b;
+            --accent-amber-dim: rgba(245, 158, 11, 0.12);
+            --accent-red: #ff4a5e;
+            --accent-red-dim: rgba(255, 74, 94, 0.12);
+            --accent-purple: #a78bfa;
+            --accent-purple-dim: rgba(167, 139, 250, 0.12);
+            --font-body: 'DM Sans', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --radius: 10px;
+            --radius-sm: 6px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+
+        .disclaimer-banner {
+            background: linear-gradient(90deg, #1a1200, #261a00);
+            border-bottom: 1px solid rgba(245, 158, 11, 0.3);
+            padding: 10px 24px;
+            font-size: 12px;
+            color: var(--accent-amber);
+            text-align: center;
+            letter-spacing: 0.02em;
+        }
+        .disclaimer-banner strong { font-weight: 600; }
+
+        .header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 14px; }
+        .logo-icon {
+            width: 36px; height: 36px;
+            background: var(--accent-blue);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 700; color: white;
+        }
+        .header-title { font-size: 18px; font-weight: 700; letter-spacing: -0.02em; }
+        .header-subtitle { font-size: 12px; color: var(--text-muted); margin-top: 1px; }
+
+        .nav-link {
+            color: var(--accent-blue);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            padding: 6px 16px;
+            border: 1px solid var(--accent-blue);
+            border-radius: 20px;
+            transition: all 0.2s;
+        }
+        .nav-link:hover { background: var(--accent-blue-dim); }
+
+        .content {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 40px 32px 80px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 8px;
+        }
+        .page-subtitle {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+        .section-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ARCHITECTURE FLOW */
+        .flow-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            align-items: center;
+            margin: 24px 0;
+        }
+        .flow-step {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 18px 24px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .flow-step-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .flow-step-label.input { color: var(--accent-blue); }
+        .flow-step-label.search { color: var(--accent-purple); }
+        .flow-step-label.ai { color: var(--accent-green); }
+        .flow-step-label.output { color: var(--accent-amber); }
+
+        .flow-step-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        .flow-arrow {
+            font-size: 20px;
+            color: var(--text-muted);
+            padding: 6px 0;
+        }
+
+        /* TECH STACK GRID */
+        .tech-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .tech-item {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+        .tech-category {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .tech-name {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        .tech-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* PROBLEM CARDS */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+        }
+        .problem-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+        }
+        .problem-icon {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .problem-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .problem-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .problem-fix {
+            margin-top: 10px;
+            font-size: 11px;
+            color: var(--accent-green);
+            font-weight: 500;
+        }
+
+        /* REGULATION TABLE */
+        .reg-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .reg-table th {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--text-muted);
+            font-weight: 600;
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .reg-table td {
+            font-size: 13px;
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .reg-table tr:last-child td { border-bottom: none; }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .badge.au { background: var(--accent-blue-dim); color: var(--accent-blue); }
+        .badge.us { background: var(--accent-green-dim); color: var(--accent-green); }
+
+        /* API TABLE */
+        .api-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .api-row:last-child { border-bottom: none; }
+        .api-method {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 4px;
+            min-width: 50px;
+            text-align: center;
+        }
+        .api-method.post { background: var(--accent-green-dim); color: var(--accent-green); }
+        .api-method.get { background: var(--accent-blue-dim); color: var(--accent-blue); }
+        .api-path {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--text-primary);
+            min-width: 200px;
+        }
+        .api-desc {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            font-size: 12px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+        }
+        .footer a { color: var(--accent-blue); text-decoration: none; }
+
+        @media (max-width: 700px) {
+            .tech-grid, .problem-grid { grid-template-columns: 1fr; }
+            .content { padding: 24px 16px 60px; }
+            .page-title { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="disclaimer-banner">
+    <strong>DEMO ONLY</strong> &mdash; This system is for educational and evaluation purposes only. It does not constitute legal advice.
+</div>
+
+<div class="header">
+    <div class="header-left">
+        <div class="logo-icon">CV</div>
+        <div>
+            <div class="header-title">ComplianceVerify AI</div>
+            <div class="header-subtitle">Documentation</div>
+        </div>
+    </div>
+    <a href="/" class="nav-link">&larr; Back to App</a>
+</div>
+
+<div class="content">
+
+    <div class="page-title">How ComplianceVerify AI Works</div>
+    <div class="page-subtitle">
+        An AI-powered system that verifies consumer complaints against financial regulatory frameworks
+        using hybrid search and citation-grounded analysis.
+    </div>
+
+    <!-- PROBLEM STATEMENT -->
+    <div class="section">
+        <div class="section-title">The Problem</div>
+        <p style="font-size:14px;color:var(--text-secondary);margin-bottom:16px;">
+            Many banks and financial institutions deploy AI systems for compliance monitoring.
+            These systems frequently suffer from three core failures that lead to missed violations,
+            false positives, and unreliable regulatory analysis.
+        </p>
+        <div class="problem-grid">
+            <div class="problem-card">
+                <div class="problem-icon">&#x1F4C4;</div>
+                <div class="problem-title">Broken PDF Chunking</div>
+                <div class="problem-desc">
+                    Page-based PDF splitting breaks regulatory clauses mid-sentence.
+                    A clause that spans pages 17-18 gets split into two incomplete fragments,
+                    destroying its legal meaning.
+                </div>
+                <div class="problem-fix">&#x2713; Fixed: Clause-boundary chunking</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">&#x1F50D;</div>
+                <div class="problem-title">Semantic-Only Search</div>
+                <div class="problem-desc">
+                    Pure vector search misses exact clause references and regulatory keywords.
+                    When a user references "RG 271.56," semantic search alone may not
+                    prioritize the exact clause.
+                </div>
+                <div class="problem-fix">&#x2713; Fixed: Hybrid FAISS + BM25 search</div>
+            </div>
+            <div class="problem-card">
+                <div class="problem-icon">&#x26A0;</div>
+                <div class="problem-title">LLM Hallucination</div>
+                <div class="problem-desc">
+                    AI models invent plausible-sounding but incorrect regulatory references.
+                    The model generates fake clause numbers and fabricated obligations
+                    that do not exist in actual regulations.
+                </div>
+                <div class="problem-fix">&#x2713; Fixed: Cite-or-refuse prompting</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div class="section">
+        <div class="section-title">Solution Architecture</div>
+        <div class="flow-container">
+            <div class="flow-step">
+                <div class="flow-step-label input">Step 1: Input</div>
+                <div class="flow-step-text">
+                    Consumer complaint text + jurisdiction selection (Australia or United States)
+                </div>
+            </div>
+            <div class="flow-arrow">&#x25BC;</div>
+            <div class="flow-step">
+                <div class="flow-step-label search">Step 2: Hybrid Search Engine</div>
+                <div class="flow-step-text">
+                    FAISS semantic search (TF-IDF vectors) and BM25 keyword search run in parallel.
+                    Results are combined using weighted ensemble scoring (50% semantic, 50% keyword)
+                    to find the top 5 most relevant regulatory clauses.
+                </div>
+            </div>
+            <div class="flow-arrow">&#x25BC;</div>
+            <div class="flow-step">
+                <div class="flow-step-label ai">Step 3: AI Analysis (Cite or Refuse)</div>
+                <div class="flow-step-text">
+                    The complaint and matched clauses are sent to Claude (Anthropic).
+                    Claude must cite specific clause IDs from the retrieved results or
+                    explicitly state "no matching regulation found." No invented references allowed.
+                </div>
+            </div>
+            <div class="flow-arrow">&#x25BC;</div>
+            <div class="flow-step">
+                <div class="flow-step-label output">Step 4: Structured Verdict</div>
+                <div class="flow-step-text">
+                    Returns: verdict (potential breach / no breach / insufficient info),
+                    risk level, explanation with cited clause IDs, and actionable recommendations.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEY INNOVATIONS -->
+    <div class="section">
+        <div class="section-title">Key Technical Approaches</div>
+
+        <div class="card">
+            <div class="card-title">Clause-Aware PDF Parsing</div>
+            <p>
+                Instead of splitting PDFs by page, the parser detects clause boundaries using
+                pattern recognition for regulatory numbering systems (ASIC RG-style, APRA CPS/SPS,
+                CFPB section references, and generic numbered clauses). Each clause is preserved as an
+                atomic unit with enriched metadata: clause ID, section title, auto-classified category,
+                jurisdiction, and source document reference.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Hybrid Search (FAISS + BM25 Ensemble)</div>
+            <p>
+                Two search strategies run simultaneously. FAISS uses TF-IDF vectors with bigram features
+                for semantic similarity. BM25 handles keyword matching for exact terms, clause numbers,
+                and specific regulatory phrases. An ensemble scorer combines both signals with
+                configurable weights, achieving higher recall and precision than either method alone.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-title">Cite-or-Refuse Prompting</div>
+            <p>
+                The AI receives only the retrieved clauses as context and follows strict instructions:
+                cite a specific clause ID for every finding, or explicitly say no matching regulation was found.
+                The model is never given free-form access to regulatory knowledge. This design
+                eliminates hallucinated clause references and fabricated obligations. The search
+                diagnostics panel exposes the underlying FAISS and BM25 scores for full transparency.
+            </p>
+        </div>
+    </div>
+
+    <!-- TECH STACK -->
+    <div class="section">
+        <div class="section-title">Technology Stack</div>
+        <div class="tech-grid">
+            <div class="tech-item">
+                <div class="tech-category">Backend Framework</div>
+                <div class="tech-name">Python + FastAPI</div>
+                <div class="tech-desc">Async REST API with automatic OpenAPI documentation</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">Semantic Search</div>
+                <div class="tech-name">FAISS (Facebook AI)</div>
+                <div class="tech-desc">Vector similarity search using TF-IDF embeddings with inner product scoring</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">Keyword Search</div>
+                <div class="tech-name">BM25 (Okapi)</div>
+                <div class="tech-desc">Probabilistic keyword retrieval for exact term matching</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">AI Analysis</div>
+                <div class="tech-name">Claude API (Anthropic)</div>
+                <div class="tech-desc">Structured compliance analysis with citation-grounded prompting</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">PDF Processing</div>
+                <div class="tech-name">pdfplumber</div>
+                <div class="tech-desc">Clause-boundary detection with regex pattern matching</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">ML Utilities</div>
+                <div class="tech-name">scikit-learn</div>
+                <div class="tech-desc">TF-IDF vectorization with sublinear term frequency and bigram features</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">Frontend</div>
+                <div class="tech-name">HTML / CSS / JavaScript</div>
+                <div class="tech-desc">Single-page interface with zero framework dependencies</div>
+            </div>
+            <div class="tech-item">
+                <div class="tech-category">Deployment</div>
+                <div class="tech-name">Docker + Render</div>
+                <div class="tech-desc">Containerized deployment with automated builds from GitHub</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- REGULATIONS -->
+    <div class="section">
+        <div class="section-title">Indexed Regulations (Demo)</div>
+        <div class="card" style="padding:0;overflow:hidden;">
+            <table class="reg-table">
+                <thead>
+                    <tr>
+                        <th>Regulation</th>
+                        <th>Jurisdiction</th>
+                        <th>Clauses</th>
+                        <th>Coverage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="color:var(--text-primary);font-weight:500;">ASIC RG 271</td>
+                        <td><span class="badge au">Australia</span></td>
+                        <td>11</td>
+                        <td>Internal Dispute Resolution: definitions, timeframes, response content, recordkeeping</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--text-primary);font-weight:500;">ASIC REP 802</td>
+                        <td><span class="badge au">Australia</span></td>
+                        <td>4</td>
+                        <td>Enforcement findings on insurer complaint handling failures (December 2024)</td>
+                    </tr>
+                    <tr>
+                        <td style="color:var(--text-primary);font-weight:500;">CFPB Guidelines</td>
+                        <td><span class="badge us">United States</span></td>
+                        <td>6</td>
+                        <td>Consumer complaint handling: response timeframes, categories, publication, monitoring</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:12px;">
+            The system accepts additional regulation PDFs through the upload API.
+            The clause-aware parser auto-detects regulatory structure across formats.
+        </p>
+    </div>
+
+    <!-- API ENDPOINTS -->
+    <div class="section">
+        <div class="section-title">API Endpoints</div>
+        <div class="card" style="padding: 16px 20px;">
+            <div class="api-row">
+                <span class="api-method post">POST</span>
+                <span class="api-path">/api/verify-complaint</span>
+                <span class="api-desc">Submit a complaint for compliance verification</span>
+            </div>
+            <div class="api-row">
+                <span class="api-method post">POST</span>
+                <span class="api-path">/api/regulations/upload</span>
+                <span class="api-desc">Upload and index a new regulation PDF</span>
+            </div>
+            <div class="api-row">
+                <span class="api-method get">GET</span>
+                <span class="api-path">/api/regulations</span>
+                <span class="api-desc">List indexed regulations and statistics</span>
+            </div>
+            <div class="api-row">
+                <span class="api-method get">GET</span>
+                <span class="api-path">/api/regulations/clauses</span>
+                <span class="api-desc">Browse individual clauses with filters</span>
+            </div>
+            <div class="api-row">
+                <span class="api-method get">GET</span>
+                <span class="api-path">/api/history</span>
+                <span class="api-desc">Recent verification history</span>
+            </div>
+            <div class="api-row">
+                <span class="api-method get">GET</span>
+                <span class="api-path">/api/health</span>
+                <span class="api-desc">System health check</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- USE CASES -->
+    <div class="section">
+        <div class="section-title">Target Use Cases</div>
+        <div class="card">
+            <div class="card-title">Compliance Teams</div>
+            <p>
+                Quickly verify incoming consumer complaints against regulatory obligations.
+                Identify which clauses are potentially at risk and get actionable recommendations
+                before escalation.
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-title">RAG System Debugging</div>
+            <p>
+                Compare how your existing compliance AI chunks, retrieves, and analyzes the same PDFs
+                and complaints. The search diagnostics panel shows both semantic and keyword scores,
+                making it straightforward to identify where your retrieval pipeline drops relevant results.
+            </p>
+        </div>
+        <div class="card">
+            <div class="card-title">Multi-Jurisdiction Monitoring</div>
+            <p>
+                Toggle between Australian (ASIC/APRA) and US (CFPB) regulatory frameworks.
+                Upload additional regulation PDFs for other jurisdictions to expand coverage.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+<div class="footer">
+    ComplianceVerify AI &mdash; Built by <a href="#">Dee</a> | Solutions Architect | 2026
+    <br>
+    <span style="margin-top:4px;display:inline-block;">
+        This is a demonstration system. It does not constitute legal advice.
+    </span>
+</div>
+
+</body>
+</html>
